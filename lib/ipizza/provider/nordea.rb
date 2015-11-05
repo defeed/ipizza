@@ -10,7 +10,7 @@ module Ipizza::Provider
 
     class << self
       attr_accessor :payments_service_url, :payments_return_url, :payments_reject_url, :payments_cancel_url
-      attr_accessor :payments_rcv_id, :payments_language
+      attr_accessor :payments_rcv_id, :payments_language, :payments_tax_code
       attr_accessor :auth_service_url, :auth_return_url, :auth_reject_url, :auth_cancel_url, :auth_language
       attr_accessor :auth_rcv_id
       attr_accessor :file_key, :rcv_account, :rcv_name, :confirm, :keyvers
@@ -20,9 +20,10 @@ module Ipizza::Provider
       req = Ipizza::Provider::Nordea::PaymentRequest.new
       req.service_url = self.class.payments_service_url
       req.params = {
-        'VERSION' => '0003',
+        'VERSION' => '0004',
         'STAMP' => payment.stamp,
         'RCV_ID' => self.class.payments_rcv_id,
+        'TAX_CODE' => self.class.payments_tax_code,
         # 'RCV_ACCOUNT' => self.rcv_account,
         # 'RCV_NAME' => self.rcv_name,
         'LANGUAGE' => self.class.payments_language,
